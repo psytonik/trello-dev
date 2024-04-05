@@ -1,9 +1,11 @@
 import React from 'react';
 import {ClerkProvider} from "@clerk/nextjs";
+import {Toaster} from "sonner";
 
 const PlatformLayout = ({children}: Readonly<{ children: React.ReactNode }>) => {
 	return (
 		<ClerkProvider>
+			<Toaster/>
 			{children}
 		</ClerkProvider>
 	);
