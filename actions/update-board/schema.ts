@@ -1,5 +1,4 @@
 import {z} from 'zod';
-// TODO 26:07
 
 export const UpdateBoard = z.object({
 	title: z.string({

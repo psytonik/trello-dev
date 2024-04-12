@@ -7,10 +7,10 @@ import {revalidatePath} from "next/cache";
 import {createSafeAction} from "@/lib/create-safe-action";
 import {DeleteBoard} from "@/actions/delete-board/schema";
 import {redirect} from "next/navigation";
-import {InputType} from "@/actions/delete-board/types";
+import {InputType, ReturnType} from "@/actions/delete-board/types";
 
 
-const handler = async (data: InputType): Promise<any> => {
+const handler = async (data: InputType): Promise<ReturnType> => {
 	const {orgId, userId} = auth();
 
 	if(!orgId || !userId) {
@@ -19,9 +19,9 @@ const handler = async (data: InputType): Promise<any> => {
 		}
 	}
 	const {id} = data;
-	let board;
+
 	try {
-		board = await db.board.delete({
+		await db.board.delete({
 			where: { id, orgId }
 		})
 	} catch (e) {
