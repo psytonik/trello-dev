@@ -27,6 +27,7 @@ export const ListOptions = ({onAddCard,data}: ListOptionsProps) => {
 	});
 	const {execute: executeCopy} = useAction(copyList, {
 		onSuccess: (data) => {
+			// @ts-ignore
 			toast.success(`List "${data.title}" copied successfully`);
 			closeRef?.current?.click();
 		},
@@ -41,8 +42,7 @@ export const ListOptions = ({onAddCard,data}: ListOptionsProps) => {
 	const onCopy = (formData: FormData) => {
 		const id = formData.get('id') as string;
 		const boardId = formData.get('boardId') as string;
-		const title = formData.get('title') as string;
-		executeCopy({id: id, boardId: boardId, title: title}).then();
+		executeCopy({id: id, boardId: boardId}).then();
 	}
 	return (
 		<Popover>
@@ -68,7 +68,6 @@ export const ListOptions = ({onAddCard,data}: ListOptionsProps) => {
 				<form action={onCopy}>
 					<input hidden name="id" id="id" value={data.id} readOnly/>
 					<input hidden name="boardId" id="boardId" value={data.boardId} readOnly/>
-					<input hidden name="title" id="title" value={data.title} readOnly/>
 					<FormSubmit variant="ghost"
 								className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm">
 						Copy List
