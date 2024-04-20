@@ -14,7 +14,7 @@ export const BoardTitleForm = ({data}:BoardTitleFormProps) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const formRef = useRef<ElementRef<"form">>(null);
 	const inputRef = useRef<ElementRef<"input">>(null);
-	const [title, setTitle] = useState(data.title);
+	const [title, setTitle] = useState<string>(data.title);
 	const {execute} = useAction(updateBoard,{
 		onSuccess: (data)=> {
 			toast.success(`Board "${data.title}" updated`);
@@ -41,14 +41,12 @@ export const BoardTitleForm = ({data}:BoardTitleFormProps) => {
 		formRef.current?.requestSubmit()
 	}
 	if(isEditing) {
-
 		return (
 			<form className="flex items-center gap-x-2" ref={formRef} action={onSubmit}>
 				<FormInput
 					id="title"
 					onBlur={onBlur}
 					ref={inputRef}
-					// @ts-ignore
 					defaultValue={title}
 					className="text-lg font-bold px-[7px] py-1 h-7 bg-transparent focus-visible:outline-none focus-visible:ring-transparent border-none"/>
 			</form>

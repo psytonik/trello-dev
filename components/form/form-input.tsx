@@ -7,7 +7,7 @@ import {cn} from "@/lib/utils";
 import FormErrors from "@/components/form/form-errors";
 
 interface FormInputProps {
-	id?: string;
+	id: string;
 	label?: string;
 	type?: string;
 	placeholder?: string;
@@ -16,7 +16,7 @@ interface FormInputProps {
 	errors?: Record<string, string[] | undefined>;
 	className?: string;
 	onBlur?: () => void,
-	defaultValue?: ""
+	defaultValue?: string
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(({
@@ -53,7 +53,6 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(({
 				/>
 			</div>
 			<FormErrors
-				// @ts-ignore
 				id={id}
 				errors={errors}
 			/>

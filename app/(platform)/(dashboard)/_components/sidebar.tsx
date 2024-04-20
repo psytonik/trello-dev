@@ -21,7 +21,6 @@ export const Sidebar = ({storageKey = "t-sidebar-state"}: SidebarProps) => {
 			infinite: true
 		}
 	});
-
 	const defaultAccordionValue: string[] = Object.keys(expanded)
 		.reduce((acc: string[],key: string)=> {
 			if(expanded[key]){

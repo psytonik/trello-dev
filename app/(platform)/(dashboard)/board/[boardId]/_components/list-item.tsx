@@ -17,9 +17,9 @@ export const ListItem = ({index, data}: ListItemProps) => {
 	const disableEditing = () => {
 		setIsEditing(false)
 	};
-	const enableEditing = () => {
+	const enableEditing = (): void => {
 		setIsEditing(true);
-		setTimeout(()=>{
+		setTimeout((): void =>{
 			textAreaFormRef.current?.focus();
 		})
 	}

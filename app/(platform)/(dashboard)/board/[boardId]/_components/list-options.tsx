@@ -12,10 +12,10 @@ import {copyList} from "@/actions/copy-list";
 import {toast} from "sonner";
 
 interface ListOptionsProps {
-	onAddCard: ()=> void;
+	onAddCard: () => void;
 	data: List
 }
-export const ListOptions = ({onAddCard,data}: ListOptionsProps) => {
+export const ListOptions = ({onAddCard, data}: ListOptionsProps) => {
 	const closeRef = useRef<ElementRef<"button">>(null);
 	const {execute: executeDelete} = useAction(deleteList, {
 		onSuccess: (data) => {
