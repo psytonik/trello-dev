@@ -28,7 +28,11 @@ export const CardHeader = ({data}: CardHeaderProps) => {
 			queryClient.invalidateQueries({
 				queryKey: ["card", data.id]
 			}).then()
+			queryClient.invalidateQueries({
+				queryKey: ["card-logs", data.id]
+			}).then()
 			toast.success(`renamed to "${data.title}"`);
+			// @ts-ignore
 			setTitle(data.title);
 		},
 		onError: (error) => {
