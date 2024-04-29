@@ -7,6 +7,9 @@ import {redirect} from "next/navigation";
 import {db} from "@/lib/db";
 import Link from "next/link";
 import {Skeleton} from "@/components/ui/skeleton";
+import {getAvailableCount} from "@/lib/org-limit";
+import {MAX_FREE_BOARDS} from "@/constants/boards";
+import {checkSubscription} from "@/lib/subscription";
 
 
 const BoardList = async () => {
@@ -14,10 +17,14 @@ const BoardList = async () => {
 	if(!orgId) {
 		return redirect('/select-org')
 	}
+
 	const boards = await db.board.findMany({
 		where :{orgId},
 		orderBy:{createdAt: "desc"}
-	})
+	});
+	const availableBoards = await getAvailableCount();
+	const isPro = await checkSubscription();
+
 	return (
 		<div className="space-y-4 ">
 			<div className="flex items-center font-semibold text-lg text-neutral-700">
@@ -41,7 +48,7 @@ const BoardList = async () => {
 					<div role="button"
 						 className="aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition">
 						<p className="text-xs">Create new board</p>
-						<span className="text-xs">5 remaining</span>
+						<span className="text-xs">{isPro ?' Unlimited ' : `${MAX_FREE_BOARDS - availableBoards} remaining`}</span>
 						<Hint sideOffset={40}
 							  description={`Free workspaces can have up to 5 open boards. For unlimited boards upgrade this workspace `}>
 							<HelpCircle className="absolute bottom-2 right-2 h-[14px] w-[14px]"/>

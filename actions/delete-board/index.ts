@@ -10,6 +10,7 @@ import {redirect} from "next/navigation";
 import {InputType, ReturnType} from "@/actions/delete-board/types";
 import {createAuditLog} from "@/lib/create-audit-log";
 import {ACTION, ENTITY_TYPE} from "@prisma/client";
+import {decreaseAvailableCount} from "@/lib/org-limit";
 
 
 const handler = async (data: InputType): Promise<ReturnType> => {
@@ -26,6 +27,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		const board = await db.board.delete({
 			where: { id, orgId }
 		})
+		await decreaseAvailableCount();
 		await createAuditLog({
 			entityId: board.id,
 			entityType: ENTITY_TYPE.BOARD,
