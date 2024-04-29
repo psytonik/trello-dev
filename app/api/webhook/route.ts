@@ -7,7 +7,7 @@ import {stripe} from '@/lib/stripe';
 export async function POST(req:Request) {
 	const body: string = await req.text();
 	const signature: string = headers().get("Stripe-Signature") as string;
-	console.log('[STRIPE_SIGNATURE]',signature)
+
 	let event : Stripe.Event
 
 	try{
