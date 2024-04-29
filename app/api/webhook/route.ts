@@ -4,12 +4,12 @@ import {NextResponse} from 'next/server';
 import {db} from "@/lib/db";
 import {stripe} from '@/lib/stripe';
 
-
-export async function POST(req:any) {
-	const body = await req.text();
-	const signature = headers().get("Stripe-Signature") as string;
-
+export async function POST(req:Request) {
+	const body: string = await req.text();
+	const signature: string = headers().get("Stripe-Signature") as string;
+	console.log('[STRIPE_SIGNATURE]',signature)
 	let event : Stripe.Event
+
 	try{
 		event = stripe.webhooks.constructEvent(
 			body,

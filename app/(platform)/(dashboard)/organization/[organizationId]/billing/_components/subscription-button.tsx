@@ -21,7 +21,7 @@ export const SubscriptionButton = ({isPro}:SubscriptionButtonProps) => {
 	});
 	const onClickButton = () => {
 		if (isPro) {
-			execute({}).then();execute({}).then();
+			execute({}).then();
 		} else {
 			proModal.onOpen()
 		}

@@ -19,7 +19,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 		}
 	}
 	const settingsUrl = absoluteUrl(`/organization/${orgId}`);
-	let url = "";
+	let url: string = "";
 	try {
 		const orgSubscription = await db.orgSubscription.findUnique({
 			where: {
@@ -38,7 +38,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 			const stripeSession = await stripe.checkout.sessions.create({
 				success_url: settingsUrl,
 				cancel_url: settingsUrl,
-				payment_method_types: ["card"],
+				payment_method_types: ["card","paypal"],
 				mode: "subscription",
 				billing_address_collection: "auto",
 				customer_email: user.emailAddresses[0].emailAddress,
@@ -62,6 +62,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 					orgId
 				}
 			});
+
 			url = stripeSession.url || "";
 		}
 	} catch (e) {
@@ -69,12 +70,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 			console.error(e.message)
 		}
 		return {
-			error: "[STRIPE_ACTIONS] - Something went wrong"
+			error: "[STRIPE] - Something went wrong"
 		}
 	}
-	revalidatePath(`/organization/${orgId}`)
-	return {
-		data: url
-	}
+	revalidatePath(`/organization/${orgId}`);
+
+	return {data: url};
 }
 export const stripeRedirect = createSafeAction(StripeRedirect, handler);
